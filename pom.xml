@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.kodologist</groupId>
+    <artifactId>octopus</artifactId>
+    <packaging>pom</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>Octopus</name>
+    <inceptionYear>2009</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>kodologist</id>
+            <name>Kodologist</name>
+            <email>kodo.logist (AT) gmail (DQT) com</email>
+            <timezone>-7</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>GITHUB</system>
+        <url>http://github.com/kodologist/octopus/issues</url>
+    </issueManagement>
+
+	<scm>
+		<connection>scm:git:git://github.com/kodologist/octopus.git</connection>
+		<url>scm:git:git://github.com/kodologist/octopus.git</url>
+	</scm>    
+
+    <build>
+        <plugins>
+        <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <target>1.5</target>
+                    <source>1.5</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>surefire-report-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-pmd-plugin</artifactId>
+	                <configuration>
+	                    <linkXref>true</linkXref>
+	                    <sourceEncoding>utf-8</sourceEncoding>
+	                    <minimumTokens>100</minimumTokens>
+	                    <targetJdk>1.5</targetJdk>
+	                </configuration>
+
+	                <reportSets>
+	                    <reportSet>
+	                        <reports>
+	                            <report>pmd</report>
+	                            <report>cpd</report>
+	                        </reports>
+	                    </reportSet>
+	                </reportSets>
+	            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
+                <configuration>
+                    <tags>TODO, @todo, FIXME, @deprecated</tags>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>1.2-SNAPSHOT</version>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                    <threshold>Normal</threshold>
+                    <effort>Default</effort>
+                    <visitors>FindDeadLocalStores,UnreadFields</visitors>
+                    <omitVisitors>FindDeadLocalStores,UnreadFields</omitVisitors>
+                    <debug>false</debug>
+                    <relaxed>false</relaxed>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javancss-maven-plugin</artifactId>
+                <version>2.0-beta-2</version>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
+
