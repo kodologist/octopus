@@ -1,0 +1,7 @@
+#Ignore the Mac OS X .DS_Store files
+.DS_Store
+
+#ignore IDEA project files
+*.iml
+*.iws
+*.ipr
