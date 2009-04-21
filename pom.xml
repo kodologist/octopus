@@ -27,15 +27,46 @@
 	<scm>
 		<connection>scm:git:git://github.com/kodologist/octopus.git</connection>
 		<url>scm:git:git://github.com/kodologist/octopus.git</url>
-	</scm>    
+	</scm>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>codehaus-plugin</id>
+            <url>http://dist.codehaus.org/</url>
+            <releases>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>Maven Snapshots</id>
+            <url>http://snapshots.maven.codehaus.org/maven2/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>iBiblio-maven2</id>
+            <name>iBiblio-maven2</name>
+            <url>http://www.ibiblio.org/maven2/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
         <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <target>1.5</target>
-                    <source>1.5</source>
+                    <target>1.6</target>
+                    <source>1.6</source>
                 </configuration>
             </plugin>
             <plugin>
@@ -84,7 +115,7 @@
 	                    <linkXref>true</linkXref>
 	                    <sourceEncoding>utf-8</sourceEncoding>
 	                    <minimumTokens>100</minimumTokens>
-	                    <targetJdk>1.5</targetJdk>
+	                    <targetJdk>1.6</targetJdk>
 	                </configuration>
 
 	                <reportSets>
@@ -99,15 +130,18 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
-                <version>2.0-beta-1</version>
                 <configuration>
-                    <tags>TODO, @todo, FIXME, @deprecated</tags>
+                    <tags>
+                        <tag>TODO</tag>
+                        <tag>@todo</tag>
+                        <tag>FIXME</tag>
+                        <tag>@deprecated</tag>
+                    </tags>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>1.2-SNAPSHOT</version>
                 <configuration>
                     <xmlOutput>true</xmlOutput>
                     <threshold>Normal</threshold>
@@ -121,7 +155,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>javancss-maven-plugin</artifactId>
-                <version>2.0-beta-2</version>
             </plugin>
         </plugins>
     </reporting>
