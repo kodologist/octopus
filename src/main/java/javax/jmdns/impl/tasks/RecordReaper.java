@@ -20,64 +20,54 @@ import javax.jmdns.impl.JmDNSImpl;
 /**
  * Periodicaly removes expired entries from the cache.
  */
-public class RecordReaper extends TimerTask
-{
-    static Logger logger = Logger.getLogger(RecordReaper.class.getName());
+public class RecordReaper extends TimerTask {
 
-    /**
-     * 
-     */
-    private final JmDNSImpl jmDNSImpl;
+  static Logger logger = Logger.getLogger(RecordReaper.class.getName());
 
-    /**
-     * @param jmDNSImpl
-     */
-    public RecordReaper(JmDNSImpl jmDNSImpl)
-    {
-        this.jmDNSImpl = jmDNSImpl;
-    }
+  /**
+   *
+   */
+  private final JmDNSImpl jmDNSImpl;
 
-    public void start(Timer timer)
-    {
-        timer.schedule(this, DNSConstants.RECORD_REAPER_INTERVAL, DNSConstants.RECORD_REAPER_INTERVAL);
-    }
+  /**
+   * @param jmDNSImpl
+   */
+  public RecordReaper(JmDNSImpl jmDNSImpl) {
+    this.jmDNSImpl = jmDNSImpl;
+  }
 
-    public void run()
-    {
-        synchronized (this.jmDNSImpl)
-        {
-            if (this.jmDNSImpl.getState() == DNSState.CANCELED)
-            {
-                return;
-            }
-            logger.finest("run() JmDNS reaping cache");
+  public void start(Timer timer) {
+    timer.schedule(this, DNSConstants.RECORD_REAPER_INTERVAL, DNSConstants.RECORD_REAPER_INTERVAL);
+  }
 
-            // Remove expired answers from the cache
-            // -------------------------------------
-            // To prevent race conditions, we defensively copy all cache
-            // entries into a list.
-            List list = new ArrayList();
-            synchronized (this.jmDNSImpl.getCache())
-            {
-                for (Iterator i = this.jmDNSImpl.getCache().iterator(); i.hasNext();)
-                {
-                    for (DNSCache.CacheNode n = (DNSCache.CacheNode) i.next(); n != null; n = n.next())
-                    {
-                        list.add(n.getValue());
-                    }
-                }
-            }
-            // Now, we remove them.
-            long now = System.currentTimeMillis();
-            for (Iterator i = list.iterator(); i.hasNext();)
-            {
-                DNSRecord c = (DNSRecord) i.next();
-                if (c.isExpired(now))
-                {
-                    this.jmDNSImpl.updateRecord(now, c);
-                    this.jmDNSImpl.getCache().remove(c);
-                }
-            }
+  public void run() {
+    synchronized (this.jmDNSImpl) {
+      if (this.jmDNSImpl.getState() == DNSState.CANCELED) {
+        return;
+      }
+      logger.finest("run() JmDNS reaping cache");
+
+      // Remove expired answers from the cache
+      // -------------------------------------
+      // To prevent race conditions, we defensively copy all cache
+      // entries into a list.
+      List list = new ArrayList();
+      synchronized (this.jmDNSImpl.getCache()) {
+        for (Iterator i = this.jmDNSImpl.getCache().iterator(); i.hasNext(); ) {
+          for (DNSCache.CacheNode n = (DNSCache.CacheNode) i.next(); n != null; n = n.next()) {
+            list.add(n.getValue());
+          }
         }
+      }
+      // Now, we remove them.
+      long now = System.currentTimeMillis();
+      for (Iterator i = list.iterator(); i.hasNext(); ) {
+        DNSRecord c = (DNSRecord) i.next();
+        if (c.isExpired(now)) {
+          this.jmDNSImpl.updateRecord(now, c);
+          this.jmDNSImpl.getCache().remove(c);
+        }
+      }
     }
+  }
 }

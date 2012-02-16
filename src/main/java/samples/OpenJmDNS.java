@@ -24,28 +24,29 @@ import java.io.IOException;
 import javax.jmdns.JmDNS;
 
 /**
- * Sample Code that opens JmDNS in debug mode.
- * <p>
- * Run the main method of this class. 
+ * Sample Code that opens JmDNS in debug mode. <p> Run the main method of this class.
  *
- * @author  Werner Randelshofer
- * @version 	%I%, %G%
+ * @author Werner Randelshofer
+ * @version %I%, %G%
  */
 public class OpenJmDNS {
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        try {
-            System.setProperty("jmdns.debug", "2");
-            JmDNS jmdns = JmDNS.create();
-            
-            System.out.println("Press q and Enter, to quit");
-            int b;
-            while ((b = System.in.read()) != -1 && (char) b != 'q'); 
-            jmdns.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    try {
+      System.setProperty("jmdns.debug", "2");
+      JmDNS jmdns = JmDNS.create();
+
+      System.out.println("Press q and Enter, to quit");
+      int b;
+      while ((b = System.in.read()) != -1 && (char) b != 'q') {
+        ;
+      }
+      jmdns.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 }

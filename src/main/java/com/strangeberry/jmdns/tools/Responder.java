@@ -27,60 +27,57 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
 /**
- * A sample JmDNS responder that reads a set of rendezvous service
- * definitions from a file and registers them with rendezvous. It uses
- * the same file format as Apple's responder.  Each record consists of
- * 4 lines: name, type, text, port. Empty lines and lines starting with #
- * between records are ignored.
+ * A sample JmDNS responder that reads a set of rendezvous service definitions from a file and
+ * registers them with rendezvous. It uses the same file format as Apple's responder.  Each record
+ * consists of 4 lines: name, type, text, port. Empty lines and lines starting with # between
+ * records are ignored.
  *
- * @author	Arthur van Hoff
- * @version 	%I%, %G%
+ * @version %I%, %G%
+ * @author Arthur van Hoff
  */
-public class Responder
-{
-    /**
-     * Constructor.
-     */
-    public Responder(JmDNS jmdns, String file) throws IOException
-    {
-	BufferedReader in = new BufferedReader(new FileReader(file));
-	try {
-	    while (true) {
-		String ln = in.readLine();
-		while ((ln != null) && (ln.startsWith("#") || ln.trim().length() == 0)) {
-		    ln = in.readLine();
-		}
-		if (ln == null) {
-		    break;
-		}
-		String name = ln;
-		String type = in.readLine();
-		String text = in.readLine();
-		int port = Integer.parseInt(in.readLine());
+public class Responder {
 
-		// make sure the type is fully qualified and in the local. domain
-		if (!type.endsWith(".")) {
-		    type += ".";
-		}
-		if  (!type.endsWith(".local.")) {
-		    type += "local.";
-		}
+  /**
+   * Constructor.
+   */
+  public Responder(JmDNS jmdns, String file) throws IOException {
+    BufferedReader in = new BufferedReader(new FileReader(file));
+    try {
+      while (true) {
+        String ln = in.readLine();
+        while ((ln != null) && (ln.startsWith("#") || ln.trim().length() == 0)) {
+          ln = in.readLine();
+        }
+        if (ln == null) {
+          break;
+        }
+        String name = ln;
+        String type = in.readLine();
+        String text = in.readLine();
+        int port = Integer.parseInt(in.readLine());
 
-		jmdns.registerService(
-		    ServiceInfo.create(type, name, port, text));
-	    }
-	} finally {
-	    in.close();
-	}
+        // make sure the type is fully qualified and in the local. domain
+        if (!type.endsWith(".")) {
+          type += ".";
+        }
+        if (!type.endsWith(".local.")) {
+          type += "local.";
+        }
+
+        jmdns.registerService(
+            ServiceInfo.create(type, name, port, text));
+      }
+    } finally {
+      in.close();
     }
-    
-    /**
-     * Create a responder.
-     */
-    public static void main(String argv[]) throws IOException
-    {
-	new Responder(JmDNS.create(), (argv.length > 0) ? argv[0] : "services.txt");
-    }
+  }
+
+  /**
+   * Create a responder.
+   */
+  public static void main(String argv[]) throws IOException {
+    new Responder(JmDNS.create(), (argv.length > 0) ? argv[0] : "services.txt");
+  }
 }
 
 
